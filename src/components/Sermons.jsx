@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Play, Pause, Clock, User, ChevronRight, BookOpen, Volume2 } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 
 const sermons = [
-  { title: 'Understanding the Times', series: 'Sunday Service', speaker: 'Pastor Samson Ajetomobi', date: '15 Jun 2026', duration: '— min', scripture: '1 Chronicles 12:32', featured: true },
-  { title: 'Reaching the Unreached', series: 'Sunday Service', speaker: 'Pastor Rufus Omolayo', date: '8 Jun 2026', duration: '— min', scripture: 'Matthew 28:19–20' },
-  { title: 'Reawakening to Your Calling', series: 'Mid Week Service', speaker: 'Pastor Sunday Adedeji', date: '4 Jun 2026', duration: '— min', scripture: 'Romans 8:28' },
-  { title: 'Walking in Purpose', series: 'Sunday Service', speaker: 'Pastor Stella Ajetomobi', date: '1 Jun 2026', duration: '— min', scripture: 'Jeremiah 29:11' },
-  { title: 'The Power of the Word', series: 'Mid Week Service', speaker: 'Pastor Samson Ajetomobi', date: '28 May 2026', duration: '— min', scripture: 'Hebrews 4:12' },
+  { title: 'Choice of God: A Divine Intervention', series: 'Sunday Service', speaker: 'MIV Edinburgh', duration: '42 min', scripture: 'Genesis 24', file: '/sermons/choice-of-god-a-divine-intervention.m4a', featured: true },
+  { title: "Faith in God's Character", series: 'Sunday Service', speaker: 'MIV Edinburgh', duration: '38 min', scripture: 'Hebrews 11:6', file: '/sermons/faith-in-gods-character.m4a' },
+  { title: 'Go, Light Your World', series: 'Sunday Service', speaker: 'MIV Edinburgh', duration: '39 min', scripture: 'Matthew 5:14–16', file: '/sermons/go-light-your-world.m4a' },
+  { title: 'Living and Walking by Faith', series: 'Bible Study', speaker: 'MIV Europe', duration: '63 min', scripture: '2 Corinthians 5:7', file: '/sermons/living-and-walking-by-faith.m4a' },
+  { title: 'The Message', series: 'Mid Week Service', speaker: 'MIV Edinburgh', duration: '39 min', scripture: 'Romans 10:17', file: '/sermons/message.m4a' },
+  { title: 'My Wife', series: 'Special Message', speaker: 'MIV Edinburgh', duration: '38 min', scripture: 'Proverbs 31:10', file: '/sermons/my-wife-message.m4a' },
+  { title: 'The Word for Today', series: 'Sunday Service', speaker: 'Pastor Sunday Adedeji', duration: '20 min', scripture: '2 Timothy 4:2', file: '/sermons/pastor-sunday-adedeji.m4a' },
+  { title: 'The Name of Jesus', series: 'Mid Week Service', speaker: 'MIV Edinburgh', duration: '32 min', scripture: 'Philippians 2:9–10', file: '/sermons/the-name-of-jesus.m4a' },
 ]
 
 const allSeries = ['All', ...new Set(sermons.map(s => s.series))]
@@ -17,15 +20,29 @@ export default function Sermons() {
   const [playing, setPlaying] = useState(null)
   const [headerRef, headerIn] = useInView()
   const [contentRef, contentIn] = useInView()
+  const audioRef = useRef(null)
 
   const featured = sermons[0]
   const rest = sermons.slice(1).filter(s => activeSeries === 'All' || s.series === activeSeries)
 
-  const togglePlay = (title) => setPlaying(p => p === title ? null : title)
+  const togglePlay = (sermon) => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (playing === sermon.title) {
+      audio.pause()
+      setPlaying(null)
+      return
+    }
+    audio.src = sermon.file
+    audio.play().catch(() => {})
+    setPlaying(sermon.title)
+  }
 
   return (
     <section id="sermons" className="section" style={{ background: 'var(--bg-card)' }}>
       <div className="container">
+        <audio ref={audioRef} onEnded={() => setPlaying(null)} />
+
         {/* Header */}
         <div
           ref={headerRef}
@@ -42,7 +59,6 @@ export default function Sermons() {
             <div className="divider" />
             <p className="section-subtitle">Listen, watch, and grow. Every message is available to revisit anytime.</p>
           </div>
-          <button className="btn btn-outline">Full Archive <ChevronRight size={15} /></button>
         </div>
 
         {/* Series filter */}
@@ -82,7 +98,7 @@ export default function Sermons() {
           }}>
             <div>
               <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-                <span style={{ background: 'var(--accent)', color: '#000', borderRadius: 99, padding: '3px 12px', fontSize: 10, fontWeight: 800, letterSpacing: 1 }}>LATEST</span>
+                <span style={{ background: 'var(--accent)', color: '#000', borderRadius: 99, padding: '3px 12px', fontSize: 10, fontWeight: 800, letterSpacing: 1 }}>FEATURED</span>
                 <span style={{ background: 'var(--bg-card)', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 99, padding: '3px 12px', fontSize: 10, fontWeight: 600, letterSpacing: 0.5 }}>
                   {featured.series}
                 </span>
@@ -99,17 +115,16 @@ export default function Sermons() {
                 <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)', fontSize: 13.5 }}><BookOpen size={13} /> {featured.scripture}</span>
               </div>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button className="btn btn-accent" onClick={() => togglePlay(featured.title)}>
+                <button className="btn btn-accent" onClick={() => togglePlay(featured)}>
                   {playing === featured.title ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />}
-                  {playing === featured.title ? 'Pause' : 'Watch Now'}
+                  {playing === featured.title ? 'Pause' : 'Listen Now'}
                 </button>
-                <button className="btn btn-outline">Listen Audio</button>
               </div>
             </div>
 
             {/* Big play circle */}
             <button
-              onClick={() => togglePlay(featured.title)}
+              onClick={() => togglePlay(featured)}
               style={{
                 width: 90, height: 90, borderRadius: '50%', border: 'none',
                 background: playing === featured.title ? '#10B981' : 'var(--primary)',
@@ -129,12 +144,13 @@ export default function Sermons() {
 
           {/* Sermon list */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {rest.map(({ title, series, speaker, duration, scripture }, i) => {
+            {rest.map((sermon, i) => {
+              const { title, series, speaker, duration, scripture } = sermon
               const isPlaying = playing === title
               return (
                 <div
                   key={title}
-                  onClick={() => togglePlay(title)}
+                  onClick={() => togglePlay(sermon)}
                   style={{
                     background: isPlaying ? 'var(--bg-card)' : 'var(--bg-card2)',
                     border: `1px solid ${isPlaying ? 'var(--primary-light)' : 'var(--border)'}`,
