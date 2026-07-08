@@ -11,7 +11,7 @@ const tiers = [
 const methods = [
   { icon: <CreditCard size={22} />, title: 'Card / Online', desc: 'Securely give online anytime using any debit or credit card.' },
   { icon: <Repeat size={22} />, title: 'Standing Order', desc: 'Set up a regular monthly giving directly from your bank.' },
-  { icon: <Building2 size={22} />, title: 'Bank Transfer', desc: 'Account: 12345678 · Sort: 60-00-01 · Ref: Men of Issachar Vision' },
+  { icon: <Building2 size={22} />, title: 'Bank Transfer', desc: 'Lloyds Bank · Name: Men of Issachar Vision · Sort Code: 30-99-50 · Acct No: 76862663' },
   { icon: <Smartphone size={22} />, title: 'Give in Church', desc: 'Use the card machine on Sundays — tap, insert, or contactless.' },
 ]
 

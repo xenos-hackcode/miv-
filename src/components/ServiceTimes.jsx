@@ -3,6 +3,8 @@ import { Clock, MapPin, Calendar, Video, Users, ChevronDown, ChevronUp, External
 import { useInView } from '../hooks/useInView'
 import flierSunday from '../assets/flier-sunday.jpeg'
 import flierMidweek from '../assets/flier-midweek.jpeg'
+import outdoorAdvert from '../assets/outdoor-advert.jpg'
+import rollUpBanner from '../assets/roll-up-banner.jpg'
 
 const services = [
   {
@@ -254,6 +256,41 @@ export default function ServiceTimes() {
                   background: 'var(--bg-card2)',
                   opacity: fliersIn ? 1 : 0,
                   transform: fliersIn ? 'none' : 'translateY(28px)',
+                  transition: `opacity 0.55s ${i * 0.12}s ease, transform 0.55s ${i * 0.12}s ease`,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
+                }}
+              >
+                <div style={{ height: 400, overflow: 'hidden' }}>
+                  <img
+                    src={src}
+                    alt={alt}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                </div>
+                <div style={{ padding: '14px 18px', fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', textAlign: 'center' }}>
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Promotional Materials */}
+        <div style={{ marginTop: 56 }}>
+          <p className="section-label" style={{ textAlign: 'center', marginBottom: 8 }}>Spread the Word</p>
+          <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, textAlign: 'center', marginBottom: 28, color: 'var(--text)' }}>Promotional Materials</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="fliers-grid">
+            {[
+              { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert', label: 'Outdoor Advert' },
+              { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner', label: 'Roll Up Banner' },
+            ].map(({ src, alt, label }, i) => (
+              <div
+                key={label}
+                style={{
+                  borderRadius: 'var(--radius)',
+                  overflow: 'hidden',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-card2)',
                   transition: `opacity 0.55s ${i * 0.12}s ease, transform 0.55s ${i * 0.12}s ease`,
                   boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
                 }}
