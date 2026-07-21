@@ -96,7 +96,9 @@ export default function Navbar() {
                 transition: 'all 0.3s',
                 opacity: 0.9,
               }}>
-                {logoExpanded ? 'Church · Edinburgh' : 'Edinburgh'}
+                {logoExpanded
+                  ? <>Redemption Faith Church<span className="navbar-city-suffix"> · Edinburgh</span></>
+                  : 'Edinburgh'}
               </div>
             </div>
           </button>
@@ -209,6 +211,7 @@ export default function Navbar() {
         }
         @media (max-width: 420px) {
           .navbar-give-btn { display: none !important; }
+          .navbar-city-suffix { display: none; }
         }
       `}</style>
     </>

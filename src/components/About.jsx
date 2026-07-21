@@ -6,7 +6,7 @@ import pastorSunday from '../assets/pastor-sunday.jpeg'
 const pillars = [
   { icon: <BookOpen size={26} />, title: 'Our Mission', body: 'To share the love of Christ by making disciples, building community, and serving our neighbours with compassion and grace.' },
   { icon: <Target size={26} />, title: 'Our Vision', body: 'A church where every person encounters God, finds belonging, and is equipped to impact the world for His glory.' },
-  { icon: <Heart size={26} />, title: 'Our Values', body: 'Faith, Community, Service, Worship, and Growth — the foundations that guide everything we do as Men of Issachar Vision.' },
+  { icon: <Heart size={26} />, title: 'Our Values', body: 'Faith, Community, Service, Worship, and Growth — the foundations that guide everything we do at Redemption Faith Church, Edinburgh.' },
 ]
 
 const stats = [
@@ -51,10 +51,13 @@ export default function About() {
           }}
         >
           <p className="section-label">Who We Are</p>
-          <h2 className="section-title">A Family Built on Faith</h2>
+          <h2 className="section-title">A Family Church Built on Faith</h2>
           <div className="divider" />
           <p className="section-subtitle">
             Men of Issachar Vision (MIV) is a Spirit-filled church in Edinburgh with a bold mandate — to reawaken the church to its calling and to reach the unreached at all cost.
+          </p>
+          <p className="section-subtitle" style={{ marginTop: 14 }}>
+            MIV is a ministry with a mandate to reawaken the church to her responsibility and to reach the unreached at all costs with the gospel of Christ. Redemption Faith Church, Edinburgh is a church arm of MIV in Edinburgh.
           </p>
         </div>
 
@@ -95,8 +98,9 @@ export default function About() {
           {/* Story */}
           <div>
             <p className="section-label">Our Story</p>
-            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(22px, 3.5vw, 34px)', marginBottom: 16, lineHeight: 1.25 }}>
-              Rooted in the Word, <span className="text-gold">Reaching the World</span>
+            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(22px, 4.2vw, 38px)', marginBottom: 16, lineHeight: 0.98 }}>
+              <span style={{ display: 'block' }}>Reaching <span className="text-gold">Community</span></span>
+              <span style={{ display: 'block', marginTop: '-0.06em' }}>Re-awakening <span className="text-gold">Community</span></span>
             </h2>
             <div className="divider" />
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: 18, fontSize: 15 }}>
