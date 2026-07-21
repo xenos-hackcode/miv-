@@ -245,16 +245,16 @@ export default function ServiceTimes() {
           <div className="fliers-marquee">
             <div className="fliers-track">
               {[
-                { src: flierSunday, alt: 'Sunday Worship Service Flier', label: 'Sunday Service' },
-                { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier', label: 'Mid Week Service' },
-                { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert', label: 'Outdoor Advert' },
-                { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner', label: 'Roll Up Banner' },
+                { src: flierSunday, alt: 'Sunday Worship Service Flier' },
+                { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier' },
+                { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert' },
+                { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner' },
               ].concat([
-                { src: flierSunday, alt: 'Sunday Worship Service Flier', label: 'Sunday Service' },
-                { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier', label: 'Mid Week Service' },
-                { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert', label: 'Outdoor Advert' },
-                { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner', label: 'Roll Up Banner' },
-              ]).map(({ src, alt, label }, i) => (
+                { src: flierSunday, alt: 'Sunday Worship Service Flier' },
+                { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier' },
+                { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert' },
+                { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner' },
+              ]).map(({ src, alt }, i) => (
                 <div key={i} className="flier-card">
                   <div className="flier-card-image">
                     <img
@@ -262,9 +262,6 @@ export default function ServiceTimes() {
                       alt={alt}
                       style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     />
-                  </div>
-                  <div style={{ padding: '14px 18px', fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', textAlign: 'center' }}>
-                    {label}
                   </div>
                 </div>
               ))}
