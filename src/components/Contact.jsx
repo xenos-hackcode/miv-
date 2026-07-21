@@ -1,10 +1,15 @@
 import { useState } from 'react'
-import { MapPin, Phone, Clock, Send, CheckCircle, MessageCircle, Lock, MessageSquare } from 'lucide-react'
+import { MapPin, Phone, Clock, Send, CheckCircle, MessageCircle, Lock, MessageSquare, Mail } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 
 const PASTORS = [
   { name: 'Pastor Sunday Adedeji', number: '447565391361', display: '+44 7565 391361' },
   { name: 'Pastor Rufus Omolayo', number: '447901613720', display: '+44 7901 613720' },
+]
+
+const EMAILS = [
+  { label: 'General Enquiries', address: 'admin@mivedinburgh.org' },
+  { label: 'Pastor Rufus Omolayo', address: 'pstrufus@mivedinburgh.org' },
 ]
 
 const info = [
@@ -21,6 +26,11 @@ const info = [
     lines: ['+44 7565 391361', '+44 7901 613720'],
     link: 'https://wa.me/447565391361',
     linkLabel: 'WhatsApp Us',
+  },
+  {
+    icon: <Mail size={22} />,
+    title: 'Email',
+    emails: EMAILS,
   },
   {
     icon: <Clock size={22} />,
@@ -44,9 +54,24 @@ function buildWhatsAppMessage(form, pastorName) {
   )
 }
 
+function buildMailtoLink(form, email) {
+  const subject = encodeURIComponent(form.subject || 'Message from MIV Website')
+  const body = encodeURIComponent(
+    `From: ${form.name}\n` +
+    (form.phone ? `Contact: ${form.phone}\n` : '') +
+    `\n${form.message}\n\n` +
+    `——————————————\n` +
+    `Men of Issachar Vision (MIV)\n` +
+    `Gorgie Memorial Hall, Edinburgh\n` +
+    `This message was sent from the MIV website.`
+  )
+  return `mailto:${email}?subject=${subject}&body=${body}`
+}
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', subject: '', message: '' })
   const [step, setStep] = useState('form') // 'form' | 'choose' | 'sent'
+  const [sentVia, setSentVia] = useState('whatsapp')
   const [errors, setErrors] = useState({})
   const [headerRef, headerIn] = useInView()
   const [contentRef, contentIn] = useInView()
@@ -73,6 +98,13 @@ export default function Contact() {
   const handleSend = (pastor) => {
     const msg = buildWhatsAppMessage(form, pastor.name)
     window.open(`https://wa.me/${pastor.number}?text=${msg}`, '_blank')
+    setSentVia('whatsapp')
+    setStep('sent')
+  }
+
+  const handleEmailSend = (email) => {
+    window.location.href = buildMailtoLink(form, email)
+    setSentVia('email')
     setStep('sent')
   }
 
@@ -113,7 +145,7 @@ export default function Contact() {
           {/* Info column */}
           <div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 28 }}>
-              {info.map(({ icon, title, lines, link, linkLabel }) => (
+              {info.map(({ icon, title, lines, link, linkLabel, emails }) => (
                 <div key={title} style={{
                   background: 'var(--bg-card)', border: '1px solid var(--border)',
                   borderRadius: 'var(--radius)', padding: '20px 22px',
@@ -135,8 +167,16 @@ export default function Contact() {
                     <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
                       {title}
                     </div>
-                    {lines.map(line => (
+                    {lines && lines.map(line => (
                       <div key={line} style={{ fontSize: 14.5, color: 'var(--text)', lineHeight: 1.65 }}>{line}</div>
+                    ))}
+                    {emails && emails.map(({ label, address }) => (
+                      <div key={address} style={{ marginBottom: 4 }}>
+                        <a href={`mailto:${address}`} style={{ fontSize: 14.5, color: 'var(--text)', lineHeight: 1.65, fontWeight: 600 }}>
+                          {address}
+                        </a>
+                        <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{label}</div>
+                      </div>
                     ))}
                     {link && (
                       <a href={link} target="_blank" rel="noopener noreferrer"
@@ -236,7 +276,7 @@ export default function Contact() {
                 <div>
                   <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, marginBottom: 8 }}>Who would you like to reach?</h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.6 }}>
-                    Choose a pastor to send your message to via WhatsApp. Your message will open in WhatsApp with the MIV signature already attached.
+                    Choose a pastor to message via WhatsApp, or send your message by email instead — either way, the MIV signature is already attached.
                   </p>
                 </div>
 
@@ -290,6 +330,44 @@ export default function Contact() {
                   ))}
                 </div>
 
+                {/* Divider */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+                  <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: 1, textTransform: 'uppercase' }}>Or by email</span>
+                  <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+                </div>
+
+                {/* Email buttons */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {EMAILS.map(email => (
+                    <button
+                      key={email.address}
+                      onClick={() => handleEmailSend(email.address)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 16,
+                        background: 'var(--bg-card2)', border: '1.5px solid var(--border)',
+                        borderRadius: 'var(--radius)', padding: '18px 20px',
+                        cursor: 'pointer', textAlign: 'left', width: '100%',
+                        transition: 'all 0.2s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--primary-light)'; e.currentTarget.style.background = 'var(--bg-card)' }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--bg-card2)' }}
+                    >
+                      <div style={{
+                        width: 44, height: 44, borderRadius: '50%', flexShrink: 0,
+                        background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>
+                        <Mail size={20} color="var(--accent)" />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{email.label}</div>
+                        <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{email.address}</div>
+                      </div>
+                      <div style={{ marginLeft: 'auto', fontSize: 22 }}>→</div>
+                    </button>
+                  ))}
+                </div>
+
                 <button
                   onClick={() => setStep('form')}
                   className="btn btn-ghost"
@@ -306,12 +384,17 @@ export default function Contact() {
                 <div style={{ color: '#25D366', marginBottom: 18, display: 'flex', justifyContent: 'center' }}>
                   <CheckCircle size={60} />
                 </div>
-                <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 24, marginBottom: 12 }}>WhatsApp Opened!</h3>
+                <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 24, marginBottom: 12 }}>
+                  {sentVia === 'email' ? 'Email Opened!' : 'WhatsApp Opened!'}
+                </h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
-                  Your message has been prepared and WhatsApp should have opened. Just press <strong>Send</strong> in WhatsApp to complete.
+                  {sentVia === 'email'
+                    ? <>Your message has been prepared and your email app should have opened. Just press <strong>Send</strong> to complete.</>
+                    : <>Your message has been prepared and WhatsApp should have opened. Just press <strong>Send</strong> in WhatsApp to complete.</>
+                  }
                 </p>
                 <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 24 }}>
-                  Want to reach the other pastor as well?
+                  Want to reach someone else as well?
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                   {PASTORS.map(pastor => (
@@ -327,6 +410,21 @@ export default function Contact() {
                       }}
                     >
                       <MessageCircle size={17} /> Also message {pastor.name}
+                    </button>
+                  ))}
+                  {EMAILS.map(email => (
+                    <button
+                      key={email.address}
+                      onClick={() => handleEmailSend(email.address)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center',
+                        background: 'rgba(123,47,190,0.1)', border: '1.5px solid rgba(123,47,190,0.35)',
+                        borderRadius: 'var(--radius)', padding: '12px 20px',
+                        cursor: 'pointer', color: 'var(--primary-light)', fontWeight: 700, fontSize: 14,
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      <Mail size={17} /> Also email {email.label}
                     </button>
                   ))}
                 </div>
