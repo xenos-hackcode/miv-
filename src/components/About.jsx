@@ -54,7 +54,7 @@ export default function About() {
           <h2 className="section-title">A Family Church Built on Faith</h2>
           <div className="divider" />
           <p className="section-subtitle">
-            Men of Issachar Vision (MIV) is a Spirit-filled church in Edinburgh with a bold mandate — to reawaken the church to its calling and to reach the unreached at all cost.
+            Rev Samson Ajetomobi and Rev (Mrs) Stella Ajetomobi are the President and Founder of MIV, with headquarters in Ibadan, Nigeria.
           </p>
           <p className="section-subtitle" style={{ marginTop: 14 }}>
             MIV is a ministry with a mandate to reawaken the church to her responsibility and to reach the unreached at all costs with the gospel of Christ. Redemption Faith Church, Edinburgh is a church arm of MIV in Edinburgh.
@@ -98,9 +98,13 @@ export default function About() {
           {/* Story */}
           <div>
             <p className="section-label">Our Story</p>
-            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(22px, 4.2vw, 38px)', marginBottom: 16, lineHeight: 0.98 }}>
-              <span style={{ display: 'block' }}>Reaching <span className="text-gold">Community</span></span>
-              <span style={{ display: 'block', marginTop: '-0.06em' }}>Re-awakening <span className="text-gold">Community</span></span>
+            <h2 className="story-loop-heading" style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(22px, 4.2vw, 38px)', marginBottom: 16, lineHeight: 1.2 }}>
+              <span className="story-loop-word">
+                <span style={{ visibility: 'hidden' }}>Re-awakening</span>
+                <span className="story-loop-item story-loop-item-1">Reaching</span>
+                <span className="story-loop-item story-loop-item-2">Re-awakening</span>
+              </span>{' '}
+              <span className="text-gold">Community</span>
             </h2>
             <div className="divider" />
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: 18, fontSize: 15 }}>
@@ -255,6 +259,30 @@ export default function About() {
         }
         @media (max-width: 480px) {
           #about .container { padding-left: 18px; padding-right: 18px; }
+        }
+
+        .story-loop-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.28em; }
+        .story-loop-word { position: relative; display: inline-block; }
+        .story-loop-item {
+          position: absolute; left: 0; top: 0;
+          white-space: nowrap; opacity: 0;
+          transform: translateY(-60%);
+          animation: story-loop-drop 6s infinite;
+        }
+        .story-loop-item-1 { animation-delay: 0s; }
+        .story-loop-item-2 { animation-delay: 3s; }
+
+        @keyframes story-loop-drop {
+          0%   { opacity: 0; transform: translateY(-60%); }
+          8%   { opacity: 1; transform: translateY(0); }
+          42%  { opacity: 1; transform: translateY(0); }
+          50%  { opacity: 0; transform: translateY(60%); }
+          100% { opacity: 0; transform: translateY(60%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .story-loop-item { animation: none; opacity: 1; transform: none; position: static; }
+          .story-loop-item-2 { display: none; }
         }
       `}</style>
     </section>

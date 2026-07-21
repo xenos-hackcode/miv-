@@ -242,79 +242,71 @@ export default function ServiceTimes() {
         >
           <p className="section-label" style={{ textAlign: 'center', marginBottom: 8 }}>Service Fliers</p>
           <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, textAlign: 'center', marginBottom: 28, color: 'var(--text)' }}>Join Us This Week</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="fliers-grid">
-            {[
-              { src: flierSunday, alt: 'Sunday Worship Service Flier', label: 'Sunday Service' },
-              { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier', label: 'Mid Week Service' },
-            ].map(({ src, alt, label }, i) => (
-              <div
-                key={label}
-                style={{
-                  borderRadius: 'var(--radius)',
-                  overflow: 'hidden',
-                  border: '1px solid var(--border)',
-                  background: 'var(--bg-card2)',
-                  opacity: fliersIn ? 1 : 0,
-                  transform: fliersIn ? 'none' : 'translateY(28px)',
-                  transition: `opacity 0.55s ${i * 0.12}s ease, transform 0.55s ${i * 0.12}s ease`,
-                  boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
-                }}
-              >
-                <div style={{ height: 400, overflow: 'hidden' }}>
-                  <img
-                    src={src}
-                    alt={alt}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
+          <div className="fliers-marquee">
+            <div className="fliers-track">
+              {[
+                { src: flierSunday, alt: 'Sunday Worship Service Flier', label: 'Sunday Service' },
+                { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier', label: 'Mid Week Service' },
+                { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert', label: 'Outdoor Advert' },
+                { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner', label: 'Roll Up Banner' },
+              ].concat([
+                { src: flierSunday, alt: 'Sunday Worship Service Flier', label: 'Sunday Service' },
+                { src: flierMidweek, alt: 'Mid Week Bible Study & Prayer Flier', label: 'Mid Week Service' },
+                { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert', label: 'Outdoor Advert' },
+                { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner', label: 'Roll Up Banner' },
+              ]).map(({ src, alt, label }, i) => (
+                <div key={i} className="flier-card">
+                  <div className="flier-card-image">
+                    <img
+                      src={src}
+                      alt={alt}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                  </div>
+                  <div style={{ padding: '14px 18px', fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', textAlign: 'center' }}>
+                    {label}
+                  </div>
                 </div>
-                <div style={{ padding: '14px 18px', fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', textAlign: 'center' }}>
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Promotional Materials */}
-        <div style={{ marginTop: 56 }}>
-          <p className="section-label" style={{ textAlign: 'center', marginBottom: 8 }}>Spread the Word</p>
-          <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, textAlign: 'center', marginBottom: 28, color: 'var(--text)' }}>Promotional Materials</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="fliers-grid">
-            {[
-              { src: outdoorAdvert, alt: 'MIV Edinburgh Outdoor Advert', label: 'Outdoor Advert' },
-              { src: rollUpBanner, alt: 'MIV Edinburgh Roll Up Banner', label: 'Roll Up Banner' },
-            ].map(({ src, alt, label }, i) => (
-              <div
-                key={label}
-                style={{
-                  borderRadius: 'var(--radius)',
-                  overflow: 'hidden',
-                  border: '1px solid var(--border)',
-                  background: 'var(--bg-card2)',
-                  transition: `opacity 0.55s ${i * 0.12}s ease, transform 0.55s ${i * 0.12}s ease`,
-                  boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
-                }}
-              >
-                <div style={{ height: 400, overflow: 'hidden' }}>
-                  <img
-                    src={src}
-                    alt={alt}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                </div>
-                <div style={{ padding: '14px 18px', fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 700, color: 'var(--text)', textAlign: 'center' }}>
-                  {label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
       </div>
 
       <style>{`
+        .fliers-marquee {
+          overflow: hidden;
+          width: 100%;
+          -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+          mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+        }
+        .fliers-track {
+          display: flex;
+          gap: 24px;
+          width: max-content;
+          animation: fliers-scroll 32s linear infinite;
+        }
+        .fliers-marquee:hover .fliers-track { animation-play-state: paused; }
+        .flier-card {
+          flex: 0 0 260px; width: 260px;
+          border-radius: var(--radius);
+          overflow: hidden;
+          border: 1px solid var(--border);
+          background: var(--bg-card2);
+          box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+        }
+        .flier-card-image { height: 380px; overflow: hidden; }
+        @keyframes fliers-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
         @media (max-width: 640px) {
-          .fliers-grid { grid-template-columns: 1fr !important; }
+          .flier-card { flex-basis: 210px; width: 210px; }
+          .flier-card-image { height: 300px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .fliers-track { animation: none; }
         }
       `}</style>
     </section>
