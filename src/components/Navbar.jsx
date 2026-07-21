@@ -147,7 +147,7 @@ export default function Navbar() {
 
             <button
               onClick={() => handleLink('#give')}
-              className="btn btn-accent"
+              className="btn btn-accent navbar-give-btn"
               style={{ padding: '9px 20px', fontSize: 13 }}
             >
               Give Now
@@ -206,6 +206,9 @@ export default function Navbar() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+        }
+        @media (max-width: 420px) {
+          .navbar-give-btn { display: none !important; }
         }
       `}</style>
     </>

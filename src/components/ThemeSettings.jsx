@@ -15,7 +15,8 @@ export default function ThemeSettings() {
       <div style={{
         position: 'fixed',
         top: 0, right: 0, bottom: 0,
-        width: 320,
+        width: 'min(320px, 100vw)',
+        maxWidth: '100vw',
         background: 'var(--bg-card)',
         borderLeft: '1px solid var(--border)',
         zIndex: 300,
