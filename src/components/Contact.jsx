@@ -9,7 +9,6 @@ const PASTORS = [
 
 const EMAILS = [
   { label: 'General Enquiries', address: 'admin@mivedinburgh.org' },
-  { label: 'Pastor Rufus Omolayo', address: 'pstrufus@mivedinburgh.org' },
 ]
 
 const info = [

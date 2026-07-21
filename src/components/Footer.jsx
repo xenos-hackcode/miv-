@@ -165,9 +165,22 @@ export default function Footer() {
         gap: 12,
       }}>
         <div className="container" style={{ padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-            © {new Date().getFullYear()} Men of Issachar Vision (MIV), Edinburgh. All rights reserved.
-          </p>
+          <div>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
+              © {new Date().getFullYear()} Men of Issachar Vision (MIV), Edinburgh. All rights reserved.
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>
+              Built by{' '}
+              <a
+                href="https://cedalstar.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'var(--accent)', fontWeight: 600 }}
+              >
+                Cedal Star
+              </a>
+            </p>
+          </div>
           <button
             onClick={scrollTop}
             style={{
