@@ -84,6 +84,7 @@ export default function About() {
         {/* Story + Stats */}
         <div
           ref={storyRef}
+          className="about-story-grid"
           style={{
             display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center',
             opacity: storyIn ? 1 : 0,
@@ -246,7 +247,10 @@ export default function About() {
 
       <style>{`
         @media (max-width: 768px) {
-          #about .container > div:nth-child(4) { grid-template-columns: 1fr !important; }
+          .about-story-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+        @media (max-width: 480px) {
+          #about .container { padding-left: 18px; padding-right: 18px; }
         }
       `}</style>
     </section>

@@ -86,7 +86,7 @@ export default function Give() {
             </div>
 
             {/* Amount tiles */}
-            <div className="grid-2" style={{ gap: 10, marginBottom: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, marginBottom: 16 }}>
               {tiers.map(({ amount, label }) => (
                 <button
                   key={amount}

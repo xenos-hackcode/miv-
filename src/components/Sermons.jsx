@@ -87,7 +87,7 @@ export default function Sermons() {
 
         <div ref={contentRef}>
           {/* Featured sermon */}
-          <div style={{
+          <div className="sermon-featured" style={{
             background: 'var(--bg-card2)', border: '1px solid var(--border)',
             borderRadius: 'var(--radius-lg)', padding: '32px 36px',
             display: 'grid', gridTemplateColumns: '1fr auto',
@@ -124,6 +124,7 @@ export default function Sermons() {
 
             {/* Big play circle */}
             <button
+              className="sermon-play-circle"
               onClick={() => togglePlay(featured)}
               style={{
                 width: 90, height: 90, borderRadius: '50%', border: 'none',
@@ -150,6 +151,7 @@ export default function Sermons() {
               return (
                 <div
                   key={title}
+                  className="sermon-item"
                   onClick={() => togglePlay(sermon)}
                   style={{
                     background: isPlaying ? 'var(--bg-card)' : 'var(--bg-card2)',
@@ -179,11 +181,11 @@ export default function Sermons() {
                       : <Play size={16} fill="#fff" color="#fff" style={{ marginLeft: 2 }} />
                     }
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
+                  <div className="sermon-item-title" style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 3, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{speaker} · {scripture}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{speaker} · {scripture}</div>
                   </div>
-                  <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
+                  <div className="sermon-meta" style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
                     {isPlaying && (
                       <span style={{ color: '#10B981', fontSize: 11, fontWeight: 700, letterSpacing: 1 }}>PLAYING</span>
                     )}
@@ -196,6 +198,25 @@ export default function Sermons() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 700px) {
+          .sermon-featured { grid-template-columns: 1fr !important; text-align: center; padding: 28px 24px !important; }
+          .sermon-featured > div:first-child > div:first-child,
+          .sermon-featured > div:first-child > div:nth-child(2) { justify-content: center !important; }
+          .sermon-featured > div:first-child > div:last-child { justify-content: center !important; }
+          .sermon-play-circle { margin: 0 auto; }
+        }
+        @media (max-width: 560px) {
+          .sermon-item { flex-wrap: wrap; }
+          .sermon-item-title { min-width: 60% !important; }
+          .sermon-meta { width: calc(100% - 58px); margin-left: 58px; margin-top: 8px; }
+        }
+        @media (max-width: 400px) {
+          .sermon-item { padding: 14px 16px !important; }
+          .sermon-meta { width: 100%; margin-left: 0; }
+        }
+      `}</style>
     </section>
   )
 }
