@@ -1,12 +1,18 @@
 import { Heart, Target, BookOpen, Users, Award, Globe, Quote } from 'lucide-react'
 import { useInView, useCounter } from '../hooks/useInView'
 import churchBuilding from '../assets/church-building.jpeg'
-import pastorSunday from '../assets/pastor-sunday.jpeg'
 
 const pillars = [
   { icon: <BookOpen size={26} />, title: 'Our Mission', body: 'To share the love of Christ by making disciples, building community, and serving our neighbours with compassion and grace.' },
   { icon: <Target size={26} />, title: 'Our Vision', body: 'A church where every person encounters God, finds belonging, and is equipped to impact the world for His glory.' },
   { icon: <Heart size={26} />, title: 'Our Values', body: 'Faith, Community, Service, Worship, and Growth — the foundations that guide everything we do at Redemption Faith Church, Edinburgh.' },
+]
+
+const leadership = [
+  { name: 'Rev Samson Ajetomobi & Rev (Mrs) Stellamaris Ajetomobi', role: 'President · MIV' },
+  { name: 'Pst Samuel Ajayi & Pst (Mrs) Bummi Ajayi', role: 'Senior Pastor · MIV Europe' },
+  { name: 'Pst Sunday Adedeji & Pst (Mrs) Kemi Adedeji', role: 'Centre Pastor · MIV Edinburgh' },
+  { name: 'Pst Rufus Omolayo & Pst (Mrs) Temilade Omolayo', role: 'Associate Pastor · MIV Edinburgh' },
 ]
 
 const stats = [
@@ -54,9 +60,6 @@ export default function About() {
           <h2 className="section-title">A Family Church Built on Faith</h2>
           <div className="divider" />
           <p className="section-subtitle">
-            Rev Samson Ajetomobi and Rev (Mrs) Stella Ajetomobi are the President and Founder of MIV, with headquarters in Ibadan, Nigeria.
-          </p>
-          <p className="section-subtitle" style={{ marginTop: 14 }}>
             MIV is a ministry with a mandate to reawaken the church to her responsibility and to reach the unreached at all costs with the gospel of Christ. Redemption Faith Church, Edinburgh is a church arm of MIV in Edinburgh.
           </p>
         </div>
@@ -104,11 +107,12 @@ export default function About() {
                 <span className="story-loop-item story-loop-item-1">Reaching</span>
                 <span className="story-loop-item story-loop-item-2">Re-awakening</span>
               </span>{' '}
-              <span className="text-gold">Community</span>
+              <span className="text-gold">Communities</span>
             </h2>
             <div className="divider" />
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: 18, fontSize: 15 }}>
-              Men of Issachar Vision (MIV) meets at Gorgie Memorial Hall in Edinburgh, led by Pastor Samson Ajetomobi and Pastor Stella Ajetomobi alongside Pastor Rufus Omolayo and Pastor Sunday Adedeji.
+              Rev Samson Ajetomobi and Rev (Mrs) Stella Ajetomobi are the President and Founder of MIV, with headquarters in Ibadan, Nigeria.
+              Redemption Faith Church (MIV Edinburgh) started in 2023 under the leadership of Pastor Sunday Adedeji and Pastor Rufus Omolayo, and is located at Gorgie Memorial Hall in Edinburgh.
               We are a church that understands the times — grounded in the prophetic insight of the sons of Issachar who knew what God's people should do (1 Chronicles 12:32).
             </p>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, fontSize: 15, marginBottom: 28 }}>
@@ -117,36 +121,39 @@ export default function About() {
               we are answering the call — right here in Edinburgh and beyond.
             </p>
 
-            {/* Pastor Sunday photo card */}
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 16,
-              background: 'var(--bg-card)', border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)', padding: '16px',
-              borderLeft: '3px solid var(--accent)',
-            }}>
-              <img
-                src={pastorSunday}
-                alt="Pastor Sunday Adedeji"
-                style={{
-                  width: 72, height: 72,
-                  borderRadius: 10,
-                  objectFit: 'cover',
-                  objectPosition: 'top',
-                  flexShrink: 0,
-                  border: '2px solid var(--accent)',
-                }}
-              />
-              <div>
-                <div style={{ fontFamily: 'Cinzel, serif', fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>
-                  Pastor Sunday Adedeji
+            {/* Leadership cards (photos to follow) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {leadership.map(({ name, role }) => (
+                <div
+                  key={name}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 16,
+                    background: 'var(--bg-card)', border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius)', padding: '16px',
+                    borderLeft: '3px solid var(--accent)',
+                  }}
+                >
+                  <div style={{
+                    width: 48, height: 48,
+                    borderRadius: 10,
+                    flexShrink: 0,
+                    background: 'var(--bg)',
+                    border: '2px solid var(--accent)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'var(--accent)',
+                  }}>
+                    <Users size={20} />
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: 'Cinzel, serif', fontSize: 14.5, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>
+                      {name}
+                    </div>
+                    <div style={{ fontSize: 12.5, color: 'var(--accent)', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>
+                      {role}
+                    </div>
+                  </div>
                 </div>
-                <div style={{ fontSize: 12.5, color: 'var(--accent)', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>
-                  Associate Pastor · MIV Edinburgh
-                </div>
-                <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.55 }}>
-                  Preaching the Word with power and passion — equipping the church for kingdom impact.
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
