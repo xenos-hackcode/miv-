@@ -12,7 +12,6 @@ const leadership = [
   { name: 'Rev Samson Ajetomobi & Rev (Mrs) Stellamaris Ajetomobi', role: 'President · MIV' },
   { name: 'Pst Samuel Ajayi & Pst (Mrs) Bummi Ajayi', role: 'Senior Pastor · MIV Europe' },
   { name: 'Pst Sunday Adedeji & Pst (Mrs) Kemi Adedeji', role: 'Centre Pastor · MIV Edinburgh' },
-  { name: 'Pst Rufus Omolayo & Pst (Mrs) Temilade Omolayo', role: 'Associate Pastor · MIV Edinburgh' },
 ]
 
 const stats = [

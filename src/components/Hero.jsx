@@ -62,19 +62,26 @@ export default function Hero() {
 
       <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '40px 24px' }}>
 
-        {/* Welcome pill */}
-        <div className="anim-fade-up" style={{
-          display: 'inline-flex', alignItems: 'center', gap: 10,
+        {/* Welcome pill — cycles between the greeting and a bouncing cross */}
+        <div className="anim-fade-up hero-welcome-pill" style={{
+          position: 'relative',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           background: 'rgba(255,255,255,0.07)',
           border: '1px solid rgba(255,255,255,0.15)',
           borderRadius: 99, padding: '8px 22px',
-          marginBottom: 40,
+          marginBottom: 40, minWidth: 250, height: 36,
           backdropFilter: 'blur(10px)',
         }}>
-          <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--accent)', animation: 'float 2s infinite' }} />
-          <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', fontWeight: 500, letterSpacing: 1.5, textTransform: 'uppercase' }}>
+          <span className="hero-welcome-text" style={{
+            position: 'absolute', left: 0, right: 0, textAlign: 'center',
+            fontSize: 13, color: 'rgba(255,255,255,0.75)', fontWeight: 500, letterSpacing: 1.5, textTransform: 'uppercase',
+          }}>
             Welcome to Our Church Family
           </span>
+          <svg className="hero-welcome-cross" width="20" height="20" viewBox="0 0 32 32" style={{ position: 'absolute' }} aria-hidden="true">
+            <rect x="13" y="1" width="6" height="30" rx="2" />
+            <rect x="3" y="10" width="26" height="6" rx="2" />
+          </svg>
         </div>
 
         {/* ── MIV / Full name expandable heading ── */}
@@ -240,6 +247,44 @@ export default function Hero() {
         <span>Scroll</span>
         <ArrowDown size={18} />
       </button>
+
+      <style>{`
+        .hero-welcome-text, .hero-welcome-cross { opacity: 0; }
+        .hero-welcome-text { animation: hero-welcome-text-swap 9s infinite; }
+        .hero-welcome-cross {
+          animation:
+            hero-welcome-cross-swap 9s infinite,
+            hero-cross-color 9s infinite,
+            hero-cross-bounce 0.9s ease-in-out infinite;
+        }
+
+        @keyframes hero-welcome-text-swap {
+          0%, 32% { opacity: 1; }
+          38%, 94% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes hero-welcome-cross-swap {
+          0%, 32% { opacity: 0; }
+          38%, 94% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        @keyframes hero-cross-color {
+          0%, 38% { fill: #D4AF37; }
+          55% { fill: #D4AF37; }
+          58% { fill: #000000; }
+          75% { fill: #000000; }
+          78%, 100% { fill: #ffffff; }
+        }
+        @keyframes hero-cross-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-welcome-text { animation: none; opacity: 1; position: static; }
+          .hero-welcome-cross { display: none; }
+        }
+      `}</style>
     </section>
   )
 }

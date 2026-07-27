@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Play, Pause, Clock, User, ChevronRight, BookOpen, Volume2 } from 'lucide-react'
+import { Play, Pause, Clock, User, BookOpen, Volume2, Download } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 
 const sermons = [
@@ -8,7 +8,7 @@ const sermons = [
   { title: 'Go, Light Your World', series: 'Sunday Service', speaker: 'MIV Edinburgh', duration: '39 min', scripture: 'Matthew 5:14–16', file: '/sermons/go-light-your-world.m4a' },
   { title: 'Living and Walking by Faith', series: 'Bible Study', speaker: 'MIV Europe', duration: '63 min', scripture: '2 Corinthians 5:7', file: '/sermons/living-and-walking-by-faith.m4a' },
   { title: 'The Message', series: 'Mid Week Service', speaker: 'MIV Edinburgh', duration: '39 min', scripture: 'Romans 10:17', file: '/sermons/message.m4a' },
-  { title: 'My Wife', series: 'Special Message', speaker: 'MIV Edinburgh', duration: '38 min', scripture: 'Proverbs 31:10', file: '/sermons/my-wife-message.m4a' },
+  { title: 'Thanksgiving Sunday', series: 'Special Message', speaker: 'MIV Edinburgh', duration: '38 min', scripture: 'Proverbs 31:10', file: '/sermons/my-wife-message.m4a' },
   { title: 'The Word for Today', series: 'Sunday Service', speaker: 'Pastor Sunday Adedeji', duration: '20 min', scripture: '2 Timothy 4:2', file: '/sermons/pastor-sunday-adedeji.m4a' },
   { title: 'The Name of Jesus', series: 'Mid Week Service', speaker: 'MIV Edinburgh', duration: '32 min', scripture: 'Philippians 2:9–10', file: '/sermons/the-name-of-jesus.m4a' },
 ]
@@ -119,6 +119,15 @@ export default function Sermons() {
                   {playing === featured.title ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />}
                   {playing === featured.title ? 'Pause' : 'Listen Now'}
                 </button>
+                <a
+                  className="btn btn-outline"
+                  href={featured.file}
+                  download
+                  title={`Download ${featured.title}`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Download size={15} /> Download
+                </a>
               </div>
             </div>
 
@@ -191,6 +200,22 @@ export default function Sermons() {
                     )}
                     <span style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 99, padding: '3px 10px', fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>{series}</span>
                     <span style={{ fontSize: 13, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}><Clock size={11} /> {duration}</span>
+                    <a
+                      href={sermon.file}
+                      download
+                      title={`Download ${title}`}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        width: 30, height: 30, borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        border: '1px solid var(--border)', color: 'var(--text-muted)',
+                        transition: 'all 0.2s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}
+                    >
+                      <Download size={13} />
+                    </a>
                   </div>
                 </div>
               )
