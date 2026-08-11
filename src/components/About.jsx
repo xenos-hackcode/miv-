@@ -112,7 +112,7 @@ export default function About() {
             <div className="divider" />
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: 18, fontSize: 15 }}>
               Rev Samson Ajetomobi and Rev (Mrs) Stella Ajetomobi are the President and Founder of MIV, with headquarters in Ibadan, Nigeria.
-              Redemption Faith Church (MIV Edinburgh) started in 2023 under the leadership of Pastor Sunday Adedeji, and is located at Gorgie Memorial Hall in Edinburgh.
+              Redemption Faith Church Edinburgh started in 2023 under the leadership of Pastor Sunday Adedeji, and is located at Gorgie Memorial Hall in Edinburgh.
               We are a church that understands the times — grounded in the prophetic insight of the sons of Issachar who knew what God's people should do (1 Chronicles 12:32).
             </p>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, fontSize: 15, marginBottom: 28 }}>
