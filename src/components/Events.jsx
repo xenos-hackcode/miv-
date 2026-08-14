@@ -1,6 +1,14 @@
 import { useState } from 'react'
 import { Calendar, MapPin, Clock, ArrowRight, X } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
+import outingPhoto1 from '../assets/1.jpg'
+import outingPhoto2 from '../assets/2.jpg'
+import outingPhoto3 from '../assets/15465.jpg'
+import outingPhoto4 from '../assets/15466.jpg'
+import outingPhoto5 from '../assets/15467.jpg'
+import outingPhoto6 from '../assets/15468.jpg'
+import outingPhoto7 from '../assets/15471.jpg'
+import outingPhoto8 from '../assets/15473.jpg'
 
 const all = [
   {
@@ -11,6 +19,7 @@ const all = [
     description: 'A fun family day out with BBQ, food, snacks, and games including table tennis — right at our church grounds. Just for fellowship and fun!',
     detail: 'Join us for a relaxed day of family fun — BBQ, food, snacks, and games including table tennis. It\'s simply a time of fellowship and fun for the whole church family, held at the same location as our Sunday services.',
     tag: 'Family', tagColor: '#10B981',
+    photos: [outingPhoto1, outingPhoto2, outingPhoto3, outingPhoto4, outingPhoto5, outingPhoto6, outingPhoto7, outingPhoto8],
   },
   {
     month: 'TBC', day: '—',
@@ -46,6 +55,7 @@ const categories = ['All', ...new Set(all.map(e => e.tag))]
 export default function Events() {
   const [activeTag, setActiveTag] = useState('All')
   const [selected, setSelected] = useState(null)
+  const [lightbox, setLightbox] = useState(null)
   const [headerRef, headerIn] = useInView()
   const [gridRef, gridIn] = useInView()
 
@@ -221,7 +231,37 @@ export default function Events() {
                 <MapPin size={14} /> {selected.location}
               </div>
             </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8, marginBottom: 28 }}>{selected.detail}</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.8, marginBottom: selected.photos ? 20 : 28 }}>{selected.detail}</p>
+
+            {selected.photos && (
+              <div style={{
+                display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8,
+                marginBottom: 28,
+              }}>
+                {selected.photos.map((src, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setLightbox(src)}
+                    style={{
+                      padding: 0, border: 'none', cursor: 'pointer',
+                      borderRadius: 8, overflow: 'hidden',
+                      background: 'var(--bg-card2)',
+                      gridColumn: i === 0 ? '1 / -1' : undefined,
+                      aspectRatio: i === 0 ? '16 / 9' : '1 / 1',
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt={`Summer Family Outing photo ${i + 1}`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.3s' }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.06)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
             <div style={{ display: 'flex', gap: 10 }}>
               <a href="https://wa.me/447565391361" target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>
                 <Calendar size={15} /> Ask About This
@@ -230,6 +270,39 @@ export default function Events() {
             </div>
           </div>
         </>
+      )}
+
+      {/* Photo lightbox */}
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 400,
+            background: 'rgba(0,0,0,0.9)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 24, cursor: 'zoom-out',
+            animation: 'fadeInUp 0.2s ease',
+          }}
+        >
+          <button
+            onClick={() => setLightbox(null)}
+            style={{
+              position: 'absolute', top: 20, right: 20,
+              width: 40, height: 40, borderRadius: '50%',
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.3)',
+              color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <X size={18} />
+          </button>
+          <img
+            src={lightbox}
+            alt="Summer Family Outing"
+            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 8 }}
+            onClick={e => e.stopPropagation()}
+          />
+        </div>
       )}
     </section>
   )
